@@ -32,6 +32,6 @@ jobs:
       # 构建并推送 Docker 镜像
       - name: Build and push Docker image
         run: |
-          docker build . -t docker.tcxa.com.cn/tcsec123/nodeapp:latest
-          docker push docker.tcxa.com.cn/tcsec123/nodeapp:latest
+          docker build . -t docker.tcxa.com.cn/tcsec123/nodeapp:${{ github.sha }}
+          docker push docker.tcxa.com.cn/tcsec123/nodeapp:${{ github.sha }}
 
