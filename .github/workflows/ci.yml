@@ -25,3 +25,4 @@ jobs:
         run: |
           docker build . -t docker.tcxa.com.cn/tcsec123/nodeapp:latest
           docker push docker.tcxa.com.cn/tcsec123/nodeapp:latest
+
