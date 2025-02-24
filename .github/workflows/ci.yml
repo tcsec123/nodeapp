@@ -25,12 +25,3 @@ jobs:
         run: |
           docker build . -t docker.tcxa.com.cn/tcsec123/nodeapp:latest
           docker push docker.tcxa.com.cn/tcsec123/nodeapp:latest
-
-      # 设置 K8s 上下文（假设已配置好 kubeconfig）
-      - name: Deploy to Kubernetes
-        uses: actions/setup-kubectl@v3
-        with:
-          version: 'v1.23.0'
-      - run: |
-          kubectl config use-context my-cluster
-          kubectl apply -f k8s/deployment.yaml
