@@ -1,0 +1,36 @@
+name: CI to Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 登录 Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 构建并推送 Docker 镜像
+      - name: Build and push Docker image
+        run: |
+          docker build . -t docker.tcxa.com.cn/tcsec123/nodeapp:latest
+          docker push docker.tcxa.com.cn/tcsec123/nodeapp:latest
+
+      # 设置 K8s 上下文（假设已配置好 kubeconfig）
+      - name: Deploy to Kubernetes
+        uses: actions/setup-kubectl@v3
+        with:
+          version: 'v1.23.0'
+      - run: |
+          kubectl config use-context my-cluster
+          kubectl apply -f k8s/deployment.yaml
